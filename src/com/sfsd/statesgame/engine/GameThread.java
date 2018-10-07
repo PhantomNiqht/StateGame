@@ -1,4 +1,4 @@
-package com.sfsd.statesgame;
+package com.sfsd.statesgame.engine;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -23,7 +23,11 @@ public class GameThread extends JPanel implements Runnable
 		{
 			try
 			{
-				
+				if (game.getScreenFactory().getCurrentScreen() != null)
+				{
+					game.getScreenFactory().getCurrentScreen().onUpdate();
+				}
+				Thread.sleep(10);
 			} catch (Exception e)
 			{
 				e.printStackTrace();
@@ -36,7 +40,10 @@ public class GameThread extends JPanel implements Runnable
 		super.paint(g);
 		Graphics2D g2d = (Graphics2D) g;
 		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-		
+		if (game.getScreenFactory().getCurrentScreen() != null)
+		{
+			game.getScreenFactory().getCurrentScreen().onDraw(g2d);
+		}
 		repaint();
 	}
 	
